@@ -28,7 +28,6 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Bookmark, Share2, X } from "lucide-react";
 
-// Placeholder for event data
 const eventData = {
   meetups: [
     {
@@ -401,16 +400,18 @@ function EventDetails({
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-full h-screen flex flex-col p-0">
-        <DialogHeader className="px-6 py-4 bg-white z-10 flex justify-between items-center">
+      <DialogContent className="w-full h-full md:h-auto md:max-w-6xl md:max-h-[90vh] flex flex-col p-0 overflow-hidden">
+        <DialogHeader className="px-4 py-2 md:px-6 md:py-4 bg-white z-10 flex flex-col md:flex-row justify-between items-start md:items-center sticky top-0">
           <div>
-            <DialogTitle className="text-2xl">{event.title}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-xl md:text-2xl">
+              {event.title}
+            </DialogTitle>
+            <DialogDescription className="text-sm md:text-base">
               {formatDate(event.eventStartTime)} -{" "}
               {formatDate(event.eventEndTime)}
             </DialogDescription>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 mt-2 md:mt-0">
             <Button variant="ghost" onClick={() => onToggleFavorite(event.id)}>
               <Bookmark className={isFavorite ? "fill-current" : ""} />
             </Button>
@@ -419,43 +420,47 @@ function EventDetails({
             </Button>
           </div>
         </DialogHeader>
-        <div className="flex-grow flex overflow-hidden">
-          <div className="w-2/3 p-6 overflow-auto">
+        <div className="flex-grow flex flex-col md:flex-row overflow-auto">
+          <div className="w-full md:w-2/3 p-4 md:p-6 overflow-auto">
             <img
               src={event.eventThumbnail}
               alt={event.title}
-              className="w-full h-64 object-cover mb-4"
+              className="w-full h-48 md:h-64 object-cover mb-4"
             />
-            <p className="mb-4">{event.eventDescription}</p>
-            <div className="grid grid-cols-2 gap-4">
+            <p className="mb-4 text-sm md:text-base">
+              {event.eventDescription}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <h3 className="font-bold">Event Details</h3>
-                <p>
+                <h3 className="font-bold text-lg mb-2">Event Details</h3>
+                <p className="mb-1">
                   <strong>Hosted by:</strong> {event.hostedBy}
                 </p>
-                <p>
+                <p className="mb-1">
                   <strong>Location:</strong> {event.location}
                 </p>
                 {event.address && (
-                  <p>
+                  <p className="mb-1">
                     <strong>Address:</strong> {event.address}
                   </p>
                 )}
-                <p>
+                <p className="mb-1">
                   <strong>Event Type:</strong> {event.eventType}
                 </p>
-                <p>
+                <p className="mb-1">
                   <strong>Price:</strong>{" "}
                   {event.isPaid ? `₹${event.price}` : "Free"}
                 </p>
               </div>
               <div>
-                <h3 className="font-bold">Additional Information</h3>
-                <p>
+                <h3 className="font-bold text-lg mb-2">
+                  Additional Information
+                </h3>
+                <p className="mb-1">
                   <strong>Dress Code:</strong>{" "}
                   {event.additionalInformation.dressCode}
                 </p>
-                <p>
+                <p className="mb-1">
                   <strong>Age Restrictions:</strong>{" "}
                   {event.additionalInformation.ageRestrictions}
                 </p>
@@ -463,7 +468,7 @@ function EventDetails({
             </div>
             {event.speakers && event.speakers.length > 0 && (
               <div className="mt-4">
-                <h3 className="font-bold">Speakers:</h3>
+                <h3 className="font-bold text-lg mb-2">Speakers:</h3>
                 <div className="flex flex-wrap">
                   {event.speakers.map((speaker, index) => (
                     <div key={index} className="flex items-center mr-4 mb-2">
@@ -474,7 +479,7 @@ function EventDetails({
                       />
                       <div>
                         <p className="font-semibold">{speaker.name}</p>
-                        <p>{speaker.designation}</p>
+                        <p className="text-sm">{speaker.designation}</p>
                       </div>
                     </div>
                   ))}
@@ -482,8 +487,8 @@ function EventDetails({
               </div>
             )}
           </div>
-          <div className="w-1/3 p-6 bg-gray-100">
-            <h3 className="font-bold mb-2">Event Tags:</h3>
+          <div className="w-full md:w-1/3 p-4 md:p-6 bg-gray-100">
+            <h3 className="font-bold text-lg mb-2">Event Tags:</h3>
             <div className="flex flex-wrap mb-4">
               {event.eventTags.map((tag, index) => (
                 <span
